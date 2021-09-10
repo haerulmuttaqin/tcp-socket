@@ -1,0 +1,21 @@
+{
+    "name": "executable",
+    "bin": "main.js",
+    "version": "1.0.0",
+    "description": "Simple TCP socket app",
+    "main": "main.js",
+    "scripts": {
+        "start": "node main.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "pkg": {
+        "output": "dist"
+    },
+    "keywords": [],
+    "author": "haerulmuttaqin",
+    "license": "ISC",
+    "dependencies": {
+        "net": "^1.0.2",
+        "pkg": "^5.2.1"
+    }
+}

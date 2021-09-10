@@ -27,11 +27,12 @@ function run() {
             });
         })
     })
-    console.log(`Server started at ${host}`);
+    console.log(`[${utils.getDatetimeNow()}] Server started at ${host}`);
+    console.log(`[${utils.getDatetimeNow()}] Waiting for client to connect...`);
 }
 
 function onClientConnection(socket) {
-    // console.log(`${socket.remoteAddress}:${socket.remotePort} Connected to port ${socket.localPort}`);
+    console.log(`[${utils.getDatetimeNow()}] ${socket.remoteAddress}:${socket.remotePort} Connected to port ${socket.localPort}`);
     inputLog(`[${utils.getDatetimeNow()}] ${socket.remoteAddress}:${socket.remotePort} Connected to port ${socket.localPort}`)
     socket.id = socket.localPort;
     sockets.push(socket);
@@ -50,6 +51,7 @@ function onClientConnection(socket) {
                                 if (socketItem.id == socket.localPort) return
                                 if (socketItem.id === clientSelected) {
                                     socketItem.write(data);
+                                    console.log(`[${utils.getDatetimeNow()}] Transaction data from ${socket.remoteAddress}:${socket.localPort} to ${socket.remoteAddress}:${clientSelected}`);
                                     inputLog(`[${utils.getDatetimeNow()}] Transaction data from ${socket.remoteAddress}:${socket.localPort} to ${socket.remoteAddress}:${clientSelected}`)
                                 }
                             });
@@ -62,11 +64,11 @@ function onClientConnection(socket) {
 
     socket.on('close', function () {
         removeSocket(socket.remotePort)
-        console.log(`${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
+        console.log(`[${utils.getDatetimeNow()}] ${socket.remoteAddress}:${socket.remotePort} Terminated the connection`);
     });
 
     socket.on('error', function (error) {
-        console.error(`${socket.remoteAddress}:${socket.remotePort} Connection Error ${error}`);
+        console.error(`[${utils.getDatetimeNow()}] ${socket.remoteAddress}:${socket.remotePort} Connection Error ${error}`);
     });
 };
 
@@ -77,7 +79,7 @@ function removeSocket(socket) {
 function inputLog(text) {
     fs.open('log/client_log.txt', 'a', 666, function (e, id) {
         fs.write(id, text + os.EOL, null, 'utf8', function () {
-            fs.close(id, function () {});
+            fs.close(id, function () { });
         });
     });
 }
