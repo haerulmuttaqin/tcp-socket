@@ -77,7 +77,7 @@ function removeSocket(socket) {
 };
 
 function inputLog(text) {
-    fs.open('log/client_log.txt', 'a', 666, function (e, id) {
+    fs.open('log/client_log.txt', 'a', 777, function (e, id) {
         fs.write(id, text + os.EOL, null, 'utf8', function () {
             fs.close(id, function () { });
         });
